@@ -1,32 +1,26 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import DashboardScreen from './app/screens/dashboard';
+import OrdersScreen from './app/screens/orders';
+import ProductsScreen from './app/screens/products';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={Dashboard}/>
-
-      </Stack.Navigator>
+      <Drawer.Navigator
+        openByDefault={true}
+        drawerType={'permanent'}
+        drawerStyle={{
+          backgroundColor: '#E8E8E8',
+        }}
+      >
+        <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+        <Drawer.Screen name="Orders" component={OrdersScreen}/>
+        <Drawer.Screen name="Products" component={ProductsScreen} />
+      </Drawer.Navigator>
 
     </NavigationContainer>
     
