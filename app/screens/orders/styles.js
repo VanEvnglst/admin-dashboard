@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-
+    orderPage:{
+    flex:1,
+    },
     orderHistoryTitle:{
       fontWeight: 'bold',
       fontSize: 24,
@@ -13,16 +15,11 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginLeft: 18,
     },
-  
-  
     container:{
       flexDirection:"row",
       marginBottom: 10,
       flex:1,
     },
-  
-  
-  
     orderNumberContainer:{
       padding: 15,
       backgroundColor: "#E9EAEA",
@@ -33,25 +30,17 @@ const styles = StyleSheet.create({
     orderNumberTitle:{
       fontSize: 18,
       marginTop: 25,
-  
-      
     },
     orderNumber:{
       fontSize: 48,
       marginLeft: 2,
     },
-  
-  
-  
     orderContentContainer:{
       backgroundColor: "#FFFFFF",
       paddingBottom: 10,
       paddingLeft: 15,
       paddingRight: 10,
-  
-  
     },
-  
     orderPrice:{
       fontSize: 14,
       textAlign: "right",
@@ -67,10 +56,6 @@ const styles = StyleSheet.create({
       marginBottom: 5,
       marginRight: 50,
     },
-  
-  
-  
-  
     orderStatusContainer:{
       padding:20,
       backgroundColor: "#A6AFAA",
@@ -81,10 +66,8 @@ const styles = StyleSheet.create({
       fontSize: 13,
       marginTop: 105,
       fontWeight: 'bold',
-  
     },
-  
-  
+
   });
 
   export default styles;
