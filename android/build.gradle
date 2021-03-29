@@ -4,9 +4,12 @@ buildscript {
     ext {
 <<<<<<< Updated upstream
         buildToolsVersion = "29.0.2"
+<<<<<<< HEAD
 =======
         buildToolsVersion = "29.0.3"
 >>>>>>> Stashed changes
+=======
+>>>>>>> 57de22d128c38d1a152f41bcfe836293455604a9
         minSdkVersion = 21
         compileSdkVersion = 29
         targetSdkVersion = 29
