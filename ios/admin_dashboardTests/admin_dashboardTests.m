@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface adminDashboardTests : XCTestCase
+@interface admin_dashboardTests : XCTestCase
 
 @end
 
-@implementation adminDashboardTests
+@implementation admin_dashboardTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

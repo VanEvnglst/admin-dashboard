@@ -1,4 +1,4 @@
-package com.admindashboard;
+package com.admin_dashboard;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "adminDashboard";
+    return "admin_dashboard";
   }
 }
