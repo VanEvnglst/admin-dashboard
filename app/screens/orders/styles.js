@@ -1,8 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
-    orderPage:{
-    flex:1,
+const styles = StyleSheet.create({  
+    orderPageContainer:{
+      flex: 1,
+      marginBottom: 10,
+    },
+    container:{
+      flex: 1,
+      flexDirection: 'row',
+    },
+    titleWrapper: {
+      paddingLeft: 2,
     },
     orderHistoryTitle:{
       fontWeight: 'bold',
@@ -15,36 +23,41 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginLeft: 18,
     },
-    container:{
-      flexDirection:"row",
-      marginBottom: 10,
-      flex:1,
-    },
     orderNumberContainer:{
       padding: 15,
       backgroundColor: "#E9EAEA",
       borderTopStartRadius: 20,
       borderBottomLeftRadius: 20,
       marginLeft: 8,
+      borderColor: '#000000',
+      borderWidth: 1,
+      width: 95,
+      height: 165,
     },
     orderNumberTitle:{
       fontSize: 18,
       marginTop: 25,
+      textAlign: 'center',
     },
     orderNumber:{
-      fontSize: 48,
+      fontSize: 36,
       marginLeft: 2,
+      textAlign: 'center',
     },
     orderContentContainer:{
       backgroundColor: "#FFFFFF",
-      paddingBottom: 10,
       paddingLeft: 15,
-      paddingRight: 10,
+      width: 236,
+      height: 165,
+      borderColor: '#000000',
+      borderBottomWidth: 1,
+      borderTopWidth: 1,
     },
     orderPrice:{
       fontSize: 14,
       textAlign: "right",
       marginBottom: 3,
+      marginRight: 10,
     },
     orderNumberReference:{
       fontSize: 16,
@@ -57,15 +70,20 @@ const styles = StyleSheet.create({
       marginRight: 50,
     },
     orderStatusContainer:{
-      padding:20,
+      width: 65,
+      height: 165,
       backgroundColor: "#A6AFAA",
       borderTopEndRadius: 20,
       borderBottomRightRadius: 20,
+      borderColor: '#000000',
+      borderWidth: 1,
     },
     orderStatus:{
-      fontSize: 13,
-      marginTop: 105,
+      fontSize: 16,
+      textAlign: "center",
+      marginTop: 70,
       fontWeight: 'bold',
+      transform: [{ rotate: '-90deg'}],
     },
 
   });
