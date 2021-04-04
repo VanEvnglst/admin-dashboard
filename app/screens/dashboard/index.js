@@ -10,277 +10,163 @@ import {
   scrollEnabled,
   Dimensions,
 } from 'react-native';
-import theme, { COLORS, SIZES, FONTS } from "./styles";
-import {styles, calendar_styles, insight_styles, notifications_styles, product_styles} from "./styles";
+import theme, {COLORS, SIZES, FONTS} from './styles';
+import {styles, calendar, insight, notifications, product} from './styles';
+import {newData} from './content'
 
-
-
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get ('window');
 
 export default class DashboardScreen extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super (props);
     this.state = {enableScrollViewScroll: true};
   }
-  render() {
+  render () {
     const scrollEnabled = this.state.screenHeight > height;
     return (
-      
-      <View onStartShouldSetResponderCapture={() => {
-        this.setState({ enableScrollViewScroll: true });
-    }}>
+      <View
+        onStartShouldSetResponderCapture={() => {
+          this.setState ({enableScrollViewScroll: true});
+        }}
+      >
         <ScrollView
-      scrollEnabled={this.state.enableScrollViewScroll}
-      ref={myScroll => (this._myScroll = myScroll)}
+          scrollEnabled={this.state.enableScrollViewScroll}
+          ref={myScroll => (this._myScroll = myScroll)}
         >
-        <Dashboard_Screen/>
+          <ScreenContent />
         </ScrollView>
       </View>
     );
   }
 }
 
-
-const Dashboard_Screen = ({ navigation }) => {
-
-
-  // Dummy Data
-  const [newData, setnewData] = React.useState([
-      {
-          id: 0,
-          name: "Total Orders",
-          value: 268,
-      
-          
-      },
-      {
-          id: 1,
-          name: "Total Customers",
-          value: 268,
-          
-          
-      },
-      {
-          id: 2,
-          name: "Total Sales",
-          value: 10000,
-          
-          
-      },
-      {
-          id: 3,
-          name: "Total Discounts",
-          value: 17,
-          
-          
-      },
-      {
-          id: 4,
-          name: "",
-          value: "",
-          
-          
-      },
-      {
-          id: 5,
-          name: "",
-          value: "",
-          
-          
-      },
-      {
-          id: 6,
-          name: "",
-          value: "",
-          
-          
-      },
-  ]);
-
-
-  React.useEffect(() => {
-  }, []);
-
+const ScreenContent = ({navigation}) => {
   // Render
 
-  function renderNewData(item, index) {
-     
-      return (
-          <View style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }}>
-              <Text
-                  
-              
-                  style={{
-                      width: SIZES.width * 0.18,
-                      height: '90%',
-                      borderRadius: 10,
-                      backgroundColor: '#696969',
-                  }}
-              ></Text>
+  function renderNewData (item, index) {
+    return (
+      <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginHorizontal: SIZES.base,
+        }}
+      >
+        <View style={styles.boxContainer}/>
+        <View  style={styles.boxTextView}>
+          <Text style={{color: COLORS.black}}>{item.name}</Text>
+          <Text style={{color: COLORS.white}}>
+            {item.value}
+          </Text>
+        </View>
 
-              <View
-                  style={{
-                      position: 'absolute',
-                      bottom: '17%',
-                      left: 0,
-                      paddingHorizontal: SIZES.base,
-                      borderTopLeftRadius: 10,
-                      borderBottomLeftRadius: 10,
-                  }}
-              >
-                  <Text style={{ color: COLORS.black, ...FONTS.body4 }}>{item.name}</Text>
-                  <Text style={{ color: COLORS.white, ...FONTS.body4 }}>{item.value}</Text>
-              </View>
-
-              <TouchableOpacity
-                  style={{
-                      position: 'absolute',
-                      top: '10%',
-                      left: 7,
-                  }}
-                  onPress={() => { console.log("Focus on pressed") }}
-              >
-                  <Text
-                      
-                      resizeMode="contain"
-                      style={{
-                          width: 50,
-                          height: 50,
-                      backgroundColor: '#FFFFFF',
-                      borderRadius: 10,
-                      }}
-                  />
-              </TouchableOpacity>
-
-          </View>
-      )
+        <TouchableOpacity
+          style={styles.iconPosition}
+          onPress={() => {
+            console.log ('Focus on pressed');
+          }}
+        >
+            <View
+            resizeMode="contain"
+            style={styles.iconContainer}
+          />
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   return (
-      
-      
-      <View style={styles.container}>
+    <View style={styles.container}>
 
+      {/* New Data */}
+      <View style={{height: '20%', backgroundColor: COLORS.lightGray}}>
+          <View style={{marginTop: SIZES.padding,}}>
+            <View style={styles.item} >
+              <Text style={styles.header}>
+                Welcome Back Admin!
+              </Text>
+            </View>
 
-          {/* New Data */}
-          <View style={{ height: "20%", backgroundColor: COLORS.white }}>
-              <View style={{
-                  flex: 1,
-                  backgroundColor: COLORS.lightGray
-              }}>
-                  <View style={{ marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding }}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <Text style={{ color: COLORS.black, ...FONTS.h2, }}>Welcome Back Admin!</Text>
-                      </View>
-
-                      <View style={{ marginTop: SIZES.base }}>
-                          <FlatList
-                              horizontal
-                              nestedScrollEnabled
-                              showsHorizontalScrollIndicator={false}
-                              data={newData}
-                              keyExtractor={item => item.id.toString()}
-                              renderItem={({ item, index }) => renderNewData(item, index)}
-                          />
-                      </View>
-                  </View>
-              </View>
+            <View style={{marginTop: SIZES.base}}>
+              <FlatList
+                horizontal
+                nestedScrollEnabled
+                showsHorizontalScrollIndicator={false}
+                data={newData}
+                keyExtractor={item => item.id.toString ()}
+                renderItem={({item, index}) => renderNewData (item, index)}
+              />
+            </View>
           </View>
-
-          {/* Calendar Display */}
-          <View style = { calendar_styles.MainContainer }>
-
-
-              <View style={calendar_styles.TextViewStyle}>
-
-                  <Text style={calendar_styles.titleText}> Calendar </Text>
-                  
-
-              </View>  
-
-          
-          </View>
-
-          {/*Insights Display*/}
-          
-          <View style = { insight_styles.MainContainer }>
-
-
-          <View style={insight_styles.TextViewStyle}>
-
-          <Text style={insight_styles.titleText}> Insights  {"\n"} 
-         
-           </Text>
-           <Text style={insight_styles.TextStyle}>
-          In publishing and graphic design,
-           Lorem ipsum is a placeholder text commonly
-            used to demonstrate the visual form of 
-            a document or a typeface without relying on
-             meaningful content. Lorem ipsum may be used 
-             as a placeholder before final copy is available.
-           </Text>
-   
-
-          </View>  
-
-
-          </View>
-              {/*Notifications Display*/}
-          
-                  
-                  <View style = { notifications_styles.MainContainer }>
-                  
-                      
-                  <View style={notifications_styles.TextViewStyle}>
-
-                  <Text style={notifications_styles.titleText}> Activities Notifications {"\n"}
-                  </Text>
-                  <Text style={notifications_styles.baseText}>National Milk Tea Day!</Text>
-                  <Text style={{ color: COLORS.black, ...FONTS.h3, }}>01 Apr 2021 {"\n"}</Text>
-                  <Text style={{ color: COLORS.primary, ...FONTS.h3, }}> It's National Milk Tea Day and we're offering
-                   a Buy 1 Take 1 Promo from 10am to 3pm</Text>
-
-                   <Text style={notifications_styles.row}></Text>
-                   <Text style={notifications_styles.baseText}>{"\n"}Day of Valor</Text>
-                  <Text style={{ color: COLORS.black, ...FONTS.h3, }}>09 Apr 2021 {"\n"}</Text>
-                  <Text style={{ color: COLORS.primary, ...FONTS.h3, }}> It's National Milk Tea Day and we're offering
-                   a Buy 1 Take 1 Promo from 10am to 3pm</Text>
-
-
-
-                  
-                  </View>  
-
-                  </View>
-
-              {/*Top Selling Products*/}
-
-
-          
-              <View style = { product_styles.MainContainer }>
-
-                  
-                  <View style={product_styles.TextViewStyle}>
-
-                  <Text style={product_styles.titleText}> Top Selling Products {"\n"} {"\n"} </Text>
-                  <Text style={product_styles.baseText}> Cheese Burger </Text>
-                  <Text style={product_styles.row}> </Text>
-                  <Text style={product_styles.baseText}> {"\n"} Milk Tea </Text>
-                  <Text style={product_styles.row}> </Text>
-                  <Text style={product_styles.baseText}> {"\n"} Mocha Latte </Text>
-                  <Text style={product_styles.row}> </Text>
-                  <Text style={product_styles.baseText}> {"\n"} Smoothie </Text>
-                  <Text style={product_styles.row}> </Text>
-
-                  </View>
-
-
-              </View>
-
-          
       </View>
-      
+
+      {/* Calendar Display */}
+      <View style={styles.subTextStyle}>
+        <View style={calendar.textContainer}>
+          <Text style={styles.titleText}> Calendar </Text>
+        </View>
+      </View>
+
+      {/*Insights Display*/}
+
+      <View style={styles.subTextStyle}>
+        <View style={insight.textContainer}>
+          <Text style={styles.titleText}>
+            {' '}Insights {'\n'}
+          </Text>
+          <Text style={insight.subTextStyle}>
+            In publishing and graphic design,
+            Lorem ipsum is a placeholder text commonly
+            used to demonstrate the visual form of
+            a document or a typeface without relying on
+            meaningful content. Lorem ipsum may be used
+            as a placeholder before final copy is available.
+          </Text>
+        </View>
+      </View>
+      {/*Notifications Display*/}
+
+      <View style={styles.subTextStyle}>
+        <View style={notifications.textContainer}>
+          <Text style={styles.titleText}>
+            Activities Notifications 
+          </Text>
+          <Text style={styles.baseText}>National Milk Tea Day!</Text>
+          <Text>
+            01 Apr 2021 
+          </Text>
+          <Text style={{color: COLORS.primary}}>
+            {' '}It's National Milk Tea Day and we're offering
+            a Buy 1 Take 1 Promo from 10am to 3pm
+          </Text>
+          <Text style={styles.row} />
+          <Text style={styles.baseText}>Day of Valor</Text>
+          <Text>
+            09 Apr 2021 
+          </Text>
+          <Text style={{color: COLORS.primary}}>
+            {' '}It's National Milk Tea Day and we're offering
+            a Buy 1 Take 1 Promo from 10am to 3pm
+          </Text>
+        </View>
+      </View>
+
+      {/*Top Selling Products*/}
+
+      <View style={styles.subTextStyle}>
+        <View style={product.textContainer}>
+          <Text style={styles.titleText}>
+            Top Selling Products 
+          </Text>
+          <Text style={styles.baseText}> Cheese Burger </Text>
+          <Text style={styles.row}> </Text>
+          <Text style={styles.baseText}>  Milk Tea </Text>
+          <Text style={styles.row}> </Text>
+          <Text style={styles.baseText}>  Mocha Latte </Text>
+          <Text style={styles.row}> </Text>
+          <Text style={styles.baseText}>  Smoothie </Text>
+          <Text style={styles.row}> </Text>
+        </View>
+      </View>
+    </View>
   );
 };
-
-
