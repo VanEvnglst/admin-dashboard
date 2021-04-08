@@ -15,13 +15,13 @@ const {
   createCategoriesTable: createCategoriesTable,
   createUsersTable: createUsersTable,
   createItemsTable: createItemsTable,
-  createShiftTable: createShiftTable,
+  createSummaryTable: createSummaryTable,
   createSalesTransTable: createSalesTransTable,
   createItemTransTable: createItemTransTable,
   createDiscountsTable: createDiscountsTable,
-  createPrinterSetupTable: createPrinterSetupTable,
-  createReprintTable: createReprintTable,
-  createEODTable: createEODTable
+  createTopSellersTable: createTopSellersTable,
+  createNotificationsTable: createNotificationsTable,
+  
 } = DatabaseConstants;
 
 export default {
@@ -37,18 +37,21 @@ export default {
           '200000'
         ).then(DB => {
           db = DB;
-          db.executeSql('SELECT 1 FROM Products LIMIT 1').then(initRes => {
+          db.executeSql('SELECT 1 FROM Categories LIMIT 1').then(initRes => {
             if(initRes[0].rows.length === 0) {
               populateDatabase(db);
             }
           }).catch(error => {
             db.transaction(tx => {
-              tx.executeSql(createProductsTable);
-              tx.executeSql(createOrdersTable);
-              tx.executeSql(createSummaryTable);
+              tx.executeSql(createCategoriesTable);
+              tx.executeSql(createItemsTable);
               tx.executeSql(createTopSellersTable);
+              tx.executeSql(createSummaryTable);
               tx.executeSql(createNotificationsTable);
-              tx.executeSql(createEODTable);
+              tx.executeSql(createUsersTable);
+              tx.executeSql(createSalesTransTable);
+              tx.executeSql(createItemTransTable);
+              tx.executeSql(createDiscountsTable);
             }).then(respo => {
               populateDatabase(db);
             }).catch(error => {
@@ -69,20 +72,26 @@ export default {
 
   populateDatabase: (db) => {
     const {
-      insertProductsData: insertProductsData,
-      insertOrdersData: insertOrdersData,
-      insertSummaryData: insertSummaryData,
-      insertTopSellersData: insertTopSellersData,
+      insertCategories: insertCategories,
+      insertItems: insertItems,
+      insertDiscounts: insertDiscounts,
+      insertAdminAcct: insertAdminAcct,
+      insertSalesTransactions: insertSalesTransactions,
+      insertSummary: insertSummary,    
+      insertTopSellers: insertTopSellers,
       insertNotifications: insertNotifications,
-      insertEODData: insertEODData,
+      insertItemTransactions: insertItemTransactions,
     } = DatabaseConstants;
     db.transaction(tx => {
-      tx.executeSql(insertProductsData);
-      tx.executeSql(insertOrdersData);
-      tx.executeSql(insertSummaryData);
-      tx.executeSql(insertTopSellersData);
+      tx.executeSql(insertCategories);
+      tx.executeSql(insertItemTransactions);
+      tx.executeSql(insertItems);
+      tx.executeSql(insertTopSellers);
       tx.executeSql(insertNotifications);
-      tx.executeSql(insertEODData);
+      tx.executeSql(insertAdminAcct);
+      tx.executeSql(insertSalesTransactions),
+      tx.executeSql(insertSummary),
+      tx.executeSql(insertDiscounts)
     }).then(() => {
       debugger;
       db.close().then(status => {
