@@ -1,27 +1,20 @@
 import SQLite from 'react-native-sqlite-storage';
+import DatabaseConstants from './constants';
 
 SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 let db;
 
-const DatabaseConfig = {
-  dbName: 'pos.db',
-  dbVersion: '1.0',
-  dbDisplayName:'POS',
-  dbSize: '200000',
-}
-
 const { 
-  createCategoriesTable: createCategoriesTable,
-  createUsersTable: createUsersTable,
-  createItemsTable: createItemsTable,
-  createSummaryTable: createSummaryTable,
-  createSalesTransTable: createSalesTransTable,
-  createItemTransTable: createItemTransTable,
-  createDiscountsTable: createDiscountsTable,
-  createTopSellersTable: createTopSellersTable,
-  createNotificationsTable: createNotificationsTable,
-  
+  createCategoriesTable,
+  createUsersTable,
+  createItemsTable,
+  createSummaryTable,
+  createSalesTransTable,
+  createItemTransTable,
+  createDiscountsTable,
+  createTopSellersTable,
+  createNotificationsTable,
 } = DatabaseConstants;
 
 export default {
@@ -68,36 +61,32 @@ export default {
       });
     });
   },
-
-
-  populateDatabase: (db) => {
-    const {
-      insertCategories: insertCategories,
-      insertItems: insertItems,
-      insertDiscounts: insertDiscounts,
-      insertAdminAcct: insertAdminAcct,
-      insertSalesTransactions: insertSalesTransactions,
-      insertSummary: insertSummary,    
-      insertTopSellers: insertTopSellers,
-      insertNotifications: insertNotifications,
-      insertItemTransactions: insertItemTransactions,
-    } = DatabaseConstants;
-    db.transaction(tx => {
-      tx.executeSql(insertCategories);
-      tx.executeSql(insertItemTransactions);
-      tx.executeSql(insertItems);
-      tx.executeSql(insertTopSellers);
-      tx.executeSql(insertNotifications);
-      tx.executeSql(insertAdminAcct);
-      tx.executeSql(insertSalesTransactions),
-      tx.executeSql(insertSummary),
-      tx.executeSql(insertDiscounts)
-    }).then(() => {
-      debugger;
-      db.close().then(status => {
-        debugger;
-        console.log('stat', status);
-      });
-    });
-  },
 }
+
+populateDatabase = (db) => {
+  const {
+    insertCategories,
+    insertItems,
+    insertDiscounts,
+    insertAdminAcct,
+    insertSalesTransactions,
+    insertSummary,    
+    insertTopSellers,
+    insertNotifications,
+    insertItemTransactions,
+  } = DatabaseConstants;
+  db.transaction(tx => {
+    tx.executeSql(insertCategories);
+    tx.executeSql(insertItemTransactions);
+    tx.executeSql(insertItems);
+    tx.executeSql(insertTopSellers);
+    tx.executeSql(insertNotifications);
+    tx.executeSql(insertAdminAcct);
+    tx.executeSql(insertSalesTransactions),
+    tx.executeSql(insertSummary),
+    tx.executeSql(insertDiscounts)
+  }).then(() => {
+    db.close().then(status => {
+    });
+  });
+};
