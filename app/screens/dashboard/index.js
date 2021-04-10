@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { initializeDb } from '../../utils/database';
+import database from '../../utils/database';
 
 const DashboardScreen = () => {
 
   useEffect(() => { 
-    initializeDb();
+    database.initializeDatabase();
   }, []);
 
   return(
