@@ -45,6 +45,7 @@ export default class DashboardScreen extends Component {
       </View>
     );
   }
+}
 
 const ScreenContent = ({navigation}) => {
   // Render
