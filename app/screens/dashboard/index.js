@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,16 +11,23 @@ import {
   Dimensions,
 } from 'react-native';
 import theme, {COLORS, SIZES, FONTS} from './styles';
-import {styles, calendar, insight, notifications, product} from './styles';
-import {newData} from './content'
+import { styles, calendar, insight, notifications, product } from './styles';
+import { newData } from './content'
+import database from '../../utils/database';
 
 const {height} = Dimensions.get ('window');
 
-export default class DashboardScreen extends React.Component {
+export default class DashboardScreen extends Component {
+  
   constructor (props) {
     super (props);
     this.state = {enableScrollViewScroll: true};
   }
+  
+  componentDidMount() {
+    database.initializeDatabase();
+  }
+  
   render () {
     const scrollEnabled = this.state.screenHeight > height;
     return (
@@ -38,7 +45,6 @@ export default class DashboardScreen extends React.Component {
       </View>
     );
   }
-}
 
 const ScreenContent = ({navigation}) => {
   // Render
