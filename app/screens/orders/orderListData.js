@@ -144,7 +144,7 @@ const orderListData = [
 
     orderStatusData: 'Completed',
     },
-    
+
     {
     id: 10,
 
