@@ -167,7 +167,7 @@ const product = StyleSheet.create({
      position: 'absolute',
      top: 370,
      right: 20,
-     width: 300,
+     width: 250,
      height: 400,
   },
 });
