@@ -45,14 +45,14 @@ export default {
               tx.executeSql(createSalesTransTable);
               tx.executeSql(createItemTransTable);
               tx.executeSql(createDiscountsTable);
-            }).then(respo => {
+            }).then(() => {
               populateDatabase(db);
             }).catch(error => {
               //database creation error
               // add functionality to re-create tables
             });
           });
-          resolve('200');
+          resolve({'status': '200', 'message': 'success'});
         }).catch(err => {
           resolve(err);
         });
@@ -75,6 +75,7 @@ populateDatabase = (db) => {
     insertNotifications,
     insertItemTransactions,
   } = DatabaseConstants;
+
   db.transaction(tx => {
     tx.executeSql(insertCategories);
     tx.executeSql(insertItemTransactions);
@@ -86,7 +87,7 @@ populateDatabase = (db) => {
     tx.executeSql(insertSummary),
     tx.executeSql(insertDiscounts)
   }).then(() => {
-    db.close().then(status => {
+    db.close().then(() => {
     });
   });
 };
