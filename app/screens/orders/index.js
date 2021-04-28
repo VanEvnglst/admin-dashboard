@@ -1,21 +1,26 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Text, View, FlatList, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, FlatList, ScrollView, SafeAreaView } from 'react-native';
 import styles from './styles';
-import { getOrderContentData } from './content'
-import database from '../../utils/database';
+import database from './content';
 
 const OrdersScreen = () => {
   const [enableScroll, setScroll] = useState(false);
-  const [orderData, setOrderData] = useState();
+  const [orderData, setOrderData] = useState([]);
 
-  function getOrderData() {
-    const response = getOrderContentData();
-    console.log('res', response);
-  }
-
-  useEffect(() => {
-    getOrderData();
+  // mag rrun tayo ng useEffect tapos sa loob tatawagin natin yung function to get the data
+  useEffect(() => {    
+      const response = database.getOrderContentData();
+      // log mo muna yung response to see yung laman. not sure why pero may parameter na _W
+      // where yung response na gusto natin naka log. kaya ginawa kong ganito
+      let res = response._W;
+      if(res.status === '200') {
+        //check status if okay, if okay set the data to orderData
+        setOrderData(res.data);
+      } else {
+        alert('Response has error');
+      }
   }, []);
+  // yung empty array sa taas ^ ginagamit para once lang mag rrun yung useEffect natin.
 
   function renderNewData(item, index) {
     return (
@@ -44,22 +49,21 @@ const OrdersScreen = () => {
   };
 
   return (
-    <View
-      onStartShouldSetResponderCapture={() => setScroll(true)}
-    >
-      <ScrollView
-        scrollEnabled={enableScroll}
-      //ref={myScroll => (_myScroll = myScroll)}
+    // SafeAreaView usually nilalagay as pinaka parent,
+    // ang use nito ay para yung content natin hindi matago sa phones na may notch
+    <SafeAreaView>
+      <View
+        onStartShouldSetResponderCapture={() => setScroll(true)}
       >
-        <View style={styles.orderPageContainer}>
-
+        <ScrollView scrollEnabled={enableScroll}>
+          <View style={styles.orderPageContainer}>
           {/* TITLE */}
-          <SafeAreaView>
             <View style={styles.titleWrapper}>
               <Text style={styles.orderHistoryTitle}>Order History</Text>
+              {/* Move your date text na maging part ng renderItem method */}
+              {/* Stick mo nalang yung format to be MM/DD/YY */}
               <Text style={styles.orderDate}>March 30, 2021</Text>
             </View>
-          </SafeAreaView>
 
           {/* Order Items */}
           <View>
@@ -73,6 +77,7 @@ const OrdersScreen = () => {
         </View>
       </ScrollView>
     </View>
+    </SafeAreaView>
   );
 };
 
