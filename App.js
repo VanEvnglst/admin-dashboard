@@ -15,6 +15,7 @@ const App = () => {
         drawerType={'permanent'}
         drawerStyle={{
           backgroundColor: '#E8E8E8',
+          width: '20%',
         }}
       >
         <Drawer.Screen name="Dashboard" component={DashboardScreen} />
