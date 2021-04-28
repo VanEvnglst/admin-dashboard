@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import styles from './styles';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import {Table, Row, TableWrapper, Cell} from 'react-native-table-component';
-import {headTable, dataTable} from './content'
-import database from './../../utils/database';
 import SQLite from 'react-native-sqlite-storage';
+import AddFab from './modal';
 
 export default class ProductsScreen extends Component {
    constructor(props) {
@@ -15,7 +14,6 @@ export default class ProductsScreen extends Component {
  }
   
   componentDidMount() {
-   console.log('did mount')
    this.getProducts();
   }
 
@@ -28,17 +26,17 @@ export default class ProductsScreen extends Component {
       ).then(DB => {
         db = DB;
         db.transaction((tx) => {
-          tx.executeSql('SELECT Item, ItemCategory FROM Items', []).then(([tx,results]) => {
+          tx.executeSql('SELECT SerialNo, Item, ItemCategory, ItemPrice FROM Items', []).then(([tx,results]) => {
               var len = results.rows.length;
               var temp = [];
               for (let i = 0; i < len; i++) {
                 let row = results.rows.item(i)
-                temp.push({'Item': row.Item,'ItemCategory': row.ItemCategory});
+                temp.push({'SKU': row.SerialNo, 'Item': row.Item, 'ItemCategory': row.ItemCategory, 'ItemPrice': row.ItemPrice});
               }
               console.log(temp);
               this.setState({ products: temp });
           }).catch(err => {
-            console.log('exe',err);
+          console.log(err);
           });
           }).then((result) => {
           db.close();
@@ -52,6 +50,8 @@ export default class ProductsScreen extends Component {
 
   render () {
     const show = this.state.products;
+    const headTable = [ 'SKU', 'Item Name', 'Category', 'Price' ];
+
     return (
       <View style={styles.container}>
         <Table style={styles.tableStyle}>
@@ -61,11 +61,19 @@ export default class ProductsScreen extends Component {
             textStyle={styles.tableText}
           />
           <ScrollView>
-              <TableWrapper>
-                  <Cell data= {show.Item}/>
+            {
+            show.map((rowData, index) => (
+              <TableWrapper key={index} style={styles.wrap}>
+                  <Cell data= {'00000'} style={styles.cell} textStyle={styles.tableText}/>
+                  <Cell data= {rowData.Item} style={styles.cell} textStyle={styles.tableText}/>
+                  <Cell data= {rowData.ItemCategory} style={styles.cell} textStyle={styles.tableText}/>
+                  <Cell data= {rowData.ItemPrice} style={styles.cell} textStyle={styles.tableText}/>
               </TableWrapper>
+            ))
+            }
           </ScrollView>
         </Table>
+        <AddFab />
       </View>
     );
   }
