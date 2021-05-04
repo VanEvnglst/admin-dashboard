@@ -1,28 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, FlatList, ScrollView, SafeAreaView } from 'react-native';
 import styles from './styles';
-import database from './content';
+import SQLite from 'react-native-sqlite-storage';
+
+SQLite.DEBUG(true);
+SQLite.enablePromise(true);
+let db;
 
 const OrdersScreen = () => {
+  
   const [enableScroll, setScroll] = useState(false);
   const [orderData, setOrderData] = useState([]);
 
   // mag rrun tayo ng useEffect tapos sa loob tatawagin natin yung function to get the data
   useEffect(() => {    
-      const response = database.getOrderContentData();
-      // log mo muna yung response to see yung laman. not sure why pero may parameter na _W
-      // where yung response na gusto natin naka log. kaya ginawa kong ganito
-      let res = response._W;
-      if(res.status === '200') {
-        //check status if okay, if okay set the data to orderData
-        setOrderData(res.data);
-      } else {
-        alert('Response has error');
-      }
+    getOrderContentData();
   }, []);
+
+  getOrderContentData = () => {
+    SQLite.openDatabase(
+      'adminDash.db',
+      '1.0',
+      'Admin Dashboard',
+      '200000'
+    ).then(DB => {
+      db = DB;
+      db.transaction(tx => {
+        tx.executeSql('SELECT * from SalesTransactions ORDER BY Date DESC').then(([tx, results]) => {
+          var len = results.rows.length;
+          var temp = [];
+          for(i = 0; i < len; i++) {
+            var item = results.rows.item(i);
+            temp.push(item);
+          }
+          setOrderData(temp);
+        }).catch(err => {
+          console.log('execute err', err);
+        })
+      });
+    }).catch(err => {
+      console.log('open database error', err);
+    })
+  }
   // yung empty array sa taas ^ ginagamit para once lang mag rrun yung useEffect natin.
 
   function renderNewData(item, index) {
+    console.log('item', item);
     return (
       <View style={styles.orderPageContainer}>
         <View style={styles.container}>
@@ -32,10 +55,16 @@ const OrdersScreen = () => {
           </View>
 
           <View style={styles.orderContentContainer}>
-            <Text style={styles.orderPrice}>{item.orderPriceData}</Text>
-            <Text style={styles.orderNumberReference}>{item.transactionNum}</Text>
-            <Text style={styles.orderContent}>{item.orderContent1Data}</Text>
-            <Text style={styles.orderContent}>{item.orderContent1Data}</Text>
+            <Text style={styles.orderPrice}>{item.Amount}</Text>
+            <Text style={styles.orderNumberReference}>{item.TransactionNum}</Text>
+            <View>
+              <Text>Payment Mode:</Text>
+            <Text style={styles.orderContent}>{item.PaymentMode}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between',       alignItems: 'center'}}>
+              <Text>Cashier Name</Text>
+            <Text style={styles.orderContent}>{item.CashierName}</Text>
+            </View>
             <Text style={styles.orderContent}>{item.orderContent1Data}</Text>
             <Text style={styles.orderContent}>{item.orderContent1Data}</Text>
           </View>
