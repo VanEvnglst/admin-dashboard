@@ -16,6 +16,7 @@ export default StyleSheet.create ({
     textAlign: 'center',
   },
   tableStyle: {
+    height: '100%',
     backgroundColor: '#FFFFFF',
   },
   centeredView: {
@@ -24,8 +25,8 @@ export default StyleSheet.create ({
     alignItems: 'center',
   },
   modalView: {
-    height: 350,
-    width: 300,
+    height: '90%',
+    width: '40%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 40,
@@ -49,14 +50,14 @@ export default StyleSheet.create ({
     marginTop: 10,
     textAlign: 'left',
   },
-  fab: {
+  addfab: {
     position: 'absolute',
     width: 60,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
     right: -5,
-    bottom: 45,
+    bottom: 0,
     backgroundColor: '#999999',
     borderRadius: 30,
     elevation: 8,
@@ -84,8 +85,19 @@ export default StyleSheet.create ({
     alignItems: 'center',
   },
   cell: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  delfab: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: -5,
+    bottom: 70,
+    backgroundColor: '#999999',
+    borderRadius: 30,
+    elevation: 8,
   },
 });
