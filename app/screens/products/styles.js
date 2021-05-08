@@ -88,4 +88,16 @@ export default StyleSheet.create ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  delfab: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: -5,
+    bottom: 70,
+    backgroundColor: '#999999',
+    borderRadius: 30,
+    elevation: 8,
+  },
 });

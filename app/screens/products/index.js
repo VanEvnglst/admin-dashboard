@@ -4,6 +4,7 @@ import {StyleSheet, ScrollView, View} from 'react-native';
 import {Table, Row, TableWrapper, Cell} from 'react-native-table-component';
 import SQLite from 'react-native-sqlite-storage';
 import AddFab from './add';
+import DelFab from './delete';
 
 export default class ProductsScreen extends Component {
    constructor(props) {
@@ -16,7 +17,7 @@ export default class ProductsScreen extends Component {
   componentDidMount() {
    this.getProducts();
   }
-
+  
   getProducts = () => {
     SQLite.openDatabase(
       'adminDash.db',
@@ -74,6 +75,7 @@ export default class ProductsScreen extends Component {
           </ScrollView>
         </Table>
         <AddFab />
+        <DelFab />
       </View>
     );
   }
