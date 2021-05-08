@@ -17,7 +17,7 @@ export default class ProductsScreen extends Component {
   componentDidMount() {
    this.getProducts();
   }
-
+  
   getProducts = () => {
     SQLite.openDatabase(
       'adminDash.db',
