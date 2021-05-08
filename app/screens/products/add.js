@@ -3,7 +3,7 @@ import {Modal, Text, View, TextInput, inputValue, TouchableOpacity, ScrollView} 
 import styles from './styles';
 import SQLite from 'react-native-sqlite-storage';
 
-export default class ModalExample extends Component {
+export default class Add extends Component {
   constructor(props) {
   super(props)
   this.state = {
