@@ -47,7 +47,7 @@ const DatabaseConstants = {
     `INSERT INTO Discounts (DiscountName, DiscountPrice) VALUES ('Senior',20), ('PWD', 20), ('10%', 10) `,
   insertAdminAcct: 
     `INSERT INTO USERS (RegUsername, RegPassword) VALUES ('admin', '1234')`,
-  insertSalesTranscations:
+  insertSalesTransactions:
     'INSERT INTO SalesTransactions (TransactionNum, Amount, Cash, PaymentMode, Date, CashierName, Status, TotalItemsWithVoid, TotalAmountWithVoid) VALUES' + 
     `(133456, 250, 500, 'Cash', '03/01/2021', 'Raven', 'Completed', 0, 0),` + 
     `(133457, 400, 400, 'Cash', '03/01/2021', 'Raven', 'Completed', 0, 0),` +

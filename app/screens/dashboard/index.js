@@ -10,11 +10,10 @@ import {
   scrollEnabled,
   Dimensions,
 } from 'react-native';
-import theme, {COLORS, SIZES, FONTS} from './styles';
+import theme, {COLORS, SIZES} from './styles';
 import { styles, calendar, insight, notifications, product } from './styles';
-import {getSummary,getTopSeller} from './content';
+import {TopSellingProducts, NotificationsSummary, getSummary} from './content';
 import database from '../../utils/database';
-
 
 const {height} = Dimensions.get ('window');
 
@@ -29,7 +28,6 @@ export default class DashboardScreen extends Component {
   
   componentDidMount() {
     database.initializeDatabase();
-  
 
   }
   
@@ -53,10 +51,10 @@ export default class DashboardScreen extends Component {
 }
 
 const ScreenContent = ({navigation}) => {
-
-
+  
+ 
 var summaryData = getSummary();
-
+// getSalesTransactions();
 
   
 function renderNewData (item, index) {
@@ -140,28 +138,14 @@ return (
     </View>
     {/*Notifications Display*/}
 
-    <View style={styles.subTextStyle}>
+    <View style={styles.subTextStyle }>
       <View style={notifications.textContainer}>
         <Text style={styles.titleText}>
           Activities Notifications 
         </Text>
-        <Text style={styles.baseText}>National Milk Tea Day!</Text>
-        <Text>
-          01 Apr 2021 
-        </Text>
-        <Text style={{color: COLORS.primary}}>
-          {' '}It's National Milk Tea Day and we're offering
-          a Buy 1 Take 1 Promo from 10am to 3pm
-        </Text>
-        <Text style={styles.row} />
-        <Text style={styles.baseText}>Day of Valor</Text>
-        <Text>
-          09 Apr 2021 
-        </Text>
-        <Text style={{color: COLORS.primary}}>
-          {' '}It's National Milk Tea Day and we're offering
-          a Buy 1 Take 1 Promo from 10am to 3pm
-        </Text>
+
+        {NotificationsSummary()}
+
       </View>
     </View>
 
@@ -172,7 +156,8 @@ return (
       <Text style={styles.titleText}>
             Top Selling Products 
       </Text>
-      {getTopSeller()}
+      
+      {TopSellingProducts()}
     
       </View>
     </View>
